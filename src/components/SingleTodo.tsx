@@ -3,7 +3,6 @@ import { Todo } from '../models';
 import { AiOutlineEdit, AiOutlineDelete } from 'react-icons/ai';
 import { MdDoneAll } from "react-icons/md";
 import './styles.css';
-import ListOfTodo from './ListOfTodo';
 
 interface Props {
     todo: Todo;
@@ -28,11 +27,11 @@ const SingleTodo: React.FC<Props> = ({todo, todos, setTodos}: Props) => {
         setTodos(todos.filter((todo) => todo.id !== id));
     };
 
-    const handleEdit = (e: React.FormEvent, todo: number) => {
+    const handleEdit = (e: React.FormEvent, id: number) => {
         e.preventDefault();
 
         setTodos(todos.map((todo) => (
-            todo.id === todo.id ? {...todo, todo: editTodo} : todo))
+            todo.id === id ? {...todo, todo: editTodo} : todo))
         );
         setEdit(false);
     };
@@ -46,8 +45,7 @@ const SingleTodo: React.FC<Props> = ({todo, todos, setTodos}: Props) => {
 
   return (
     <form className='todos__single' onSubmit={(e) => handleEdit(e, todo.id)}>
-        {
-            edit ? (
+        {   edit ? (
                 <input
                     ref={inputRef}
                     className='todos__single--text'
@@ -66,10 +64,7 @@ const SingleTodo: React.FC<Props> = ({todo, todos, setTodos}: Props) => {
                     )
             )
         }
-
-
         
-
         <div>
             <span className="icon" onClick={() => {
                 if (!edit && !todo.isDone) {
